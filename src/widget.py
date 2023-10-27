@@ -1,6 +1,6 @@
 from datetime import datetime
 
-from masks import mask_card_number, mask_account_number
+from src.masks import mask_card_number, mask_account_number
 
 
 def make_numbers(data: str) -> str:
