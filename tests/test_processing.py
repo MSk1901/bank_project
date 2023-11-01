@@ -1,15 +1,5 @@
-import pytest
-
+from conftest import list_dicts
 from src.processing import sort_by_date, sort_by_state
-
-
-@pytest.fixture
-def list_dicts():
-    return [
-        {"id": 1, "state": "EXECUTED", "date": "2020-10-30"},
-        {"id": 2, "state": "CANCELED", "date": "2023-12-01"},
-        {"id": 3, "state": "EXECUTED", "date": "2018-06-12"}
-    ]
 
 
 def test_sort_by_state(list_dicts):
