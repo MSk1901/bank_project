@@ -1,6 +1,6 @@
 import pytest
 
-from src.widget import make_numbers, fix_date
+from src.widget import fix_date, make_numbers
 
 
 @pytest.mark.parametrize("data, expected_result", [("Maestro 1596837868705199", "Maestro 1596 83** **** 5199"),
