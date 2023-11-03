@@ -1,4 +1,7 @@
 import json
+import os
+import requests
+from dotenv import load_dotenv
 
 
 def get_data(filename: str) -> list[dict]:
@@ -14,3 +17,25 @@ def get_data(filename: str) -> list[dict]:
                     return data
     except FileNotFoundError:
         return []
+
+
+def transaction_amount(transaction: dict) -> float | str:
+    """Возвращает сумму транзакции в рублях,
+    при необходимости конвертируя другую валюту в рубли"""
+
+    currency = transaction["operationAmount"]["currency"]["code"]
+    if currency == "RUB":
+        return float(transaction["operationAmount"]["amount"])
+    elif currency == "USD" or currency == "EUR":
+        load_dotenv()
+        API_KEY = os.getenv("EXCHANGE_RATE_API_KEY")
+
+        url = f"https://api.apilayer.com/exchangerates_data/latest?base={currency}"
+        response = requests.get(url, headers={'apikey': API_KEY})
+        response_data = json.loads(response.text)
+        rate = response_data["rates"]["RUB"]
+
+        amount = float(transaction["operationAmount"]["amount"]) * rate
+        return round(amount, 2)
+    else:
+        return "Некорректная валюта"
