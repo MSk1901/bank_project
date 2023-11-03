@@ -80,8 +80,8 @@ def tr_list() -> list[dict]:
             "operationAmount": {
                 "amount": "67314.70",
                 "currency": {
-                    "name": "руб.",
-                    "code": "RUB"
+                    "name": "CNY",
+                    "code": "CNY"
                 }
             },
             "description": "Перевод организации",
