@@ -27,15 +27,18 @@ def transaction_amount(transaction: dict) -> float | str:
     if currency == "RUB":
         return float(transaction["operationAmount"]["amount"])
     elif currency == "USD" or currency == "EUR":
-        load_dotenv()
-        API_KEY = os.getenv("EXCHANGE_RATE_API_KEY")
+        try:
+            load_dotenv()
+            API_KEY = os.getenv("EXCHANGE_RATE_API_KEY")
 
-        url = f"https://api.apilayer.com/exchangerates_data/latest?base={currency}"
-        response = requests.get(url, headers={'apikey': API_KEY})
-        response_data = json.loads(response.text)
-        rate = response_data["rates"]["RUB"]
+            url = f"https://api.apilayer.com/exchangerates_data/latest?base={currency}"
+            response = requests.get(url, headers={'apikey': API_KEY})
+            response_data = json.loads(response.text)
+            rate = response_data["rates"]["RUB"]
 
-        amount = float(transaction["operationAmount"]["amount"]) * rate
-        return round(amount, 2)
+            amount = float(transaction["operationAmount"]["amount"]) * rate
+            return round(amount, 2)
+        except Exception:
+            return "Что-то пошло не так"
     else:
         return "Некорректная валюта"
