@@ -33,12 +33,13 @@ def transaction_amount(transaction: dict) -> float | str:
 
             url = f"https://api.apilayer.com/exchangerates_data/latest?base={currency}"
             response = requests.get(url, headers={'apikey': API_KEY})
-            response_data = json.loads(response.text)
+            response.raise_for_status()
+            response_data = response.json()
             rate = response_data["rates"]["RUB"]
 
             amount = float(transaction["operationAmount"]["amount"]) * rate
             return round(amount, 2)
-        except Exception:
-            return "Что-то пошло не так"
+        except (requests.exceptions.HTTPError, ValueError, KeyError):
+            raise ValueError("Что-то пошло не так")
     else:
-        return "Некорректная валюта"
+        raise ValueError("Некорректная валюта")
