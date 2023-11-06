@@ -1,30 +1,62 @@
+from datetime import datetime
+
 from src.decorators import log
 
 
-def test_log_without_filename():
+def test_log_without_filename_positive(capsys):
     @log()
     def add(a, b):
         return a + b
 
-    result = add(1, 2)
-    result1 = add(1, "a")
+    date = str(datetime.now())
+    add(1, 2)
+    captured = capsys.readouterr()
 
-    assert f"{result[0]}\n{result[-7:]}" == "3\nadd ok\n"
-    assert "error" in result1 and "unsupported operand" in result1
+    assert captured.out.strip() == f"3\n{date[:-7]} add ok"
 
 
-def test_log_with_filename():
+def test_log_without_filename_negative(capsys):
+    @log()
+    def add(a, b):
+        return a + b
+
+    date = str(datetime.now())
+    add(1, "a")
+    captured = capsys.readouterr()
+
+    assert captured.out.strip() == (
+            f"{date[:-7]}" + " add error unsupported operand type(s) for +: 'int' and 'str'. Inputs: (1, 'a'), {}")
+
+
+def test_log_with_filename_positive(capsys):
     @log(filename="testlog.txt")
     def add(a, b):
         return a + b
 
-    result = add(1, 2)
+    date = str(datetime.now())
+    add(1, 2)
+    captured = capsys.readouterr()
+
+    assert captured.out.strip() == "3"
+
+    with open("testlog.txt") as file:
+        lines = file.readlines()
+        line = lines[-1]
+
+        assert line.strip() == f"{date[:-7]} add ok"
+
+
+def test_log_with_filename_negative():
+    @log(filename="testlog.txt")
+    def add(a, b):
+        return a + b
+
+    date = str(datetime.now())
     add(1, "a")
 
     with open("testlog.txt") as file:
         lines = file.readlines()
-        line1 = lines[-2]
-        line2 = lines[-1]
-        assert result == 3
-        assert line1[-7:] == "add ok\n"
-        assert "error" in line2 and "unsupported operand" in line2
+        line = lines[-1]
+
+        assert line.strip() == (
+            f"{date[:-7]}" + " add error unsupported operand type(s) for +: 'int' and 'str'. Inputs: (1, 'a'), {}")
