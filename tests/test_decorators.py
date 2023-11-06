@@ -9,10 +9,10 @@ def test_log_without_filename_positive(capsys):
         return a + b
 
     date = str(datetime.now())
-    add(1, 2)
+    result = add(1, 2)
     captured = capsys.readouterr()
-
-    assert captured.out.strip() == f"3\n{date[:-7]} add ok"
+    assert result == 3
+    assert captured.out.strip() == f"{date[:-7]} add ok"
 
 
 def test_log_without_filename_negative(capsys):
@@ -34,10 +34,8 @@ def test_log_with_filename_positive(capsys):
         return a + b
 
     date = str(datetime.now())
-    add(1, 2)
-    captured = capsys.readouterr()
 
-    assert captured.out.strip() == "3"
+    assert add(1, 2)  == 3
 
     with open("testlog.txt") as file:
         lines = file.readlines()
