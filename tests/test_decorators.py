@@ -35,7 +35,7 @@ def test_log_with_filename_positive(capsys):
 
     date = str(datetime.now())
 
-    assert add(1, 2)  == 3
+    assert add(1, 2) == 3
 
     with open("testlog.txt") as file:
         lines = file.readlines()
