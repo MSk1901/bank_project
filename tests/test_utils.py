@@ -2,7 +2,6 @@ from unittest.mock import patch
 import pytest
 import requests
 
-from conftest import tr_list
 from src.utils import get_data, transaction_amount
 
 
