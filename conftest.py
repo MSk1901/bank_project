@@ -2,7 +2,7 @@ import pytest
 
 
 @pytest.fixture
-def list_dicts():
+def list_dicts() -> list[dict]:
     return [
         {"id": 1, "state": "EXECUTED", "date": "2020-10-30"},
         {"id": 2, "state": "CANCELED", "date": "2023-12-01"},
@@ -11,7 +11,7 @@ def list_dicts():
 
 
 @pytest.fixture
-def tr_list():
+def tr_list() -> list[dict]:
     return [
         {
             "id": 939719570,

@@ -1,4 +1,3 @@
-from conftest import list_dicts
 from src.processing import sort_by_date, sort_by_state
 
 
