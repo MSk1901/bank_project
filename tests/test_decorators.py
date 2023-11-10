@@ -28,7 +28,7 @@ def test_log_without_filename_negative(capsys):
             f"{date[:-7]}" + " add error unsupported operand type(s) for +: 'int' and 'str'. Inputs: (1, 'a'), {}")
 
 
-def test_log_with_filename_positive(capsys):
+def test_log_with_filename_positive():
     @log(filename="testlog.txt")
     def add(a, b):
         return a + b
