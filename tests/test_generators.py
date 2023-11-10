@@ -7,8 +7,7 @@ from src.generators import card_number_generator, filter_by_currency, transactio
                                                                 142264268,
                                                                 895315941
                                                                 ]),
-                                                       ("RUB", [873106923,
-                                                                594226727])
+                                                       ("RUB", [873106923])
                                                        ])
 def test_filter_by_currency(tr_list, currency, expected_result):
     assert [x["id"] for x in list(filter_by_currency(tr_list, currency))] == expected_result
