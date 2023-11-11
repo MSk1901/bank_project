@@ -10,28 +10,19 @@ def log(*, filename: str | None = None) -> Callable:
     def wrapper(func: Callable) -> Callable:
         @wraps(func)
         def inner(*args: Optional[Any], **kwargs: Optional[Any]) -> Optional[Any]:
-            time = str(datetime.now())
-            if not filename:
-                try:
-                    result = func(*args, **kwargs)
-                    text = f"{time[:-7]} {func.__name__} ok\n"
-                    print(text)
-                    return result
-                except Exception:
-                    err_type = sys.exc_info()
-                    print(f"{time[:-7]} {func.__name__} error {err_type[1]}. Inputs: {args}, {kwargs}\n")
-                    return None
-            else:
+            time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+            try:
+                result = func(*args, **kwargs)
+                text = f"{time} {func.__name__} ok\n"
+            except Exception:
+                err_type = sys.exc_info()
+                text = f"{time} {func.__name__} error {err_type[1]}. Inputs: {args}, {kwargs}\n"
+                result = None
+            if filename:
                 with open(filename, "a+") as file:
-                    try:
-                        result = func(*args, **kwargs)
-                        text = f"{time[:-7]} {func.__name__} ok\n"
-                        file.write(text)
-                        return result
-                    except Exception:
-                        err_type = sys.exc_info()
-                        file.write(
-                            f"{time[:-7]} {func.__name__} error {err_type[1]}. Inputs: {args}, {kwargs}\n")
-                        return None
+                    file.write(text)
+            else:
+                print(text)
+            return result
         return inner
     return wrapper
