@@ -26,6 +26,7 @@ def transaction_amount(transaction: dict) -> float:
     при необходимости конвертируя другую валюту в рубли"""
 
     currency = transaction["operationAmount"]["currency"]["code"]
+    date = transaction["date"][:10]
     if currency == "RUB":
         return float(transaction["operationAmount"]["amount"])
     elif currency == "USD" or currency == "EUR":
@@ -34,7 +35,7 @@ def transaction_amount(transaction: dict) -> float:
         if api_key is None:
             raise ValueError("Нет ключа API")
         try:
-            url = f"https://api.apilayer.com/exchangerates_data/latest?base={currency}"
+            url = f"https://api.apilayer.com/exchangerates_data/{date}?base={currency}"
             response = requests.get(url, headers={'apikey': api_key})
             response.raise_for_status()
             response_data = response.json()
