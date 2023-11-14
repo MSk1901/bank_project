@@ -1,4 +1,4 @@
-from typing import Iterable, Any
+from typing import Any, Iterable
 
 
 def filter_by_currency(data: list[dict], currency: str) -> Iterable[dict[str, Any]]:
