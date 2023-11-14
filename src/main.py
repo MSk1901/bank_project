@@ -1,10 +1,14 @@
+import os
+
 from src.processing import sort_by_date, sort_by_state
 from src.utils import get_data, transaction_amount
 from src.widget import fix_date, make_numbers
 
+PATH_TO_FILE = os.path.join(os.path.dirname(os.path.dirname(__file__)), "data", "operations.json")
+
 
 def main() -> None:
-    transactions = get_data("/home/masha/PycharmProjects/bank_project/data/operations.json")
+    transactions = get_data(PATH_TO_FILE)
     tr_filtered = sort_by_state(transactions)
     tr_sorted = sort_by_date(tr_filtered)
     five_tr = tr_sorted[:5]
