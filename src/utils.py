@@ -6,7 +6,7 @@ from typing import Any
 import requests
 from dotenv import load_dotenv
 
-logger = logging.getLogger(__name__)
+logger = logging.getLogger("utils")
 file_handler = logging.FileHandler("utils.log", "w+", "utf-8")
 file_formatter = logging.Formatter('%(asctime)s %(name)s %(levelname)s: %(message)s')
 file_handler.setFormatter(file_formatter)
