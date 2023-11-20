@@ -15,7 +15,7 @@ def test_get_data_valid(mock_file):
 @patch("src.utils.open")
 def test_get_data_invalid_file(mock_open):
     mock_file = mock_open.return_value.__enter__.return_value
-    mock_file.read.return_value = "{}"
+    mock_file.read.return_value = "None"
     assert get_data("test.txt") == []
     mock_open.assert_called_once_with('test.txt')
 
