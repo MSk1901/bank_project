@@ -1,4 +1,5 @@
 import pytest
+import pandas as pd
 
 
 @pytest.fixture
@@ -89,3 +90,23 @@ def tr_list() -> list[dict]:
             "to": "Счет 14211924144426031657"
         }
     ]
+
+
+@pytest.fixture
+def dataframe_valid():
+    return pd.DataFrame([{"date": "2023-09-05T11:30:32Z",
+                          "amount": "26165.0",
+                          "currency_name": "rubles",
+                          "currency_code": "RUB",
+                          },
+                         ])
+
+
+@pytest.fixture
+def dataframe_invalid():
+    return pd.DataFrame([{"date": "nan",
+                          "amount": "26165.0",
+                          "currency_name": "rubles",
+                          "currency_code": "RUB",
+                          "from": "nan"},
+                         ])
