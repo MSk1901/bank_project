@@ -39,4 +39,3 @@ def test_invalid_file():
     with pytest.raises(Exception):
         assert get_data_xls_csv("1234.csv") == "Некорректный формат файла или файл не найден"
         assert get_data_xls_csv("1234.txt") == "Некорректный формат файла или файл не найден"
-
