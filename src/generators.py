@@ -1,4 +1,5 @@
 from typing import Any, Iterable
+from collections import Counter
 
 
 def filter_by_currency(data: list[dict], currency: str) -> Iterable[dict[str, Any]]:
@@ -25,3 +26,14 @@ def card_number_generator(start: int, end: int) -> Iterable[str]:
     for num in range(start, end + 1):
         number = f"{'0' * (16 - len(str(num)))}{num}"
         yield f"{number[:4]} {number[4:8]} {number[8:12]} {number[12:]}"
+
+
+def count_categories(data: list[dict]) -> dict:
+    """
+    Считает количество операций по категориям
+    :param data: список словарей с данными о банковских операциях
+    :return: Словарь с названиями категорий и количеством операций
+    """
+    descriptions = transaction_descriptions(data)
+    counter = dict(Counter(descriptions))
+    return counter
