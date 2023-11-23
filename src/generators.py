@@ -28,12 +28,14 @@ def card_number_generator(start: int, end: int) -> Iterable[str]:
         yield f"{number[:4]} {number[4:8]} {number[8:12]} {number[12:]}"
 
 
-def count_categories(data: list[dict]) -> dict:
+def count_categories(data: list[dict], categories: dict) -> dict:
     """
     Считает количество операций по категориям
     :param data: список словарей с данными о банковских операциях
+    :param categories: Cловарь с названиями категорий
     :return: Словарь с названиями категорий и количеством операций
     """
-    descriptions = transaction_descriptions(data)
+
+    descriptions = [x["description"] for x in data if x["description"] in categories.keys()]
     counter = dict(Counter(descriptions))
     return counter
